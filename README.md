@@ -2,38 +2,41 @@
 
 # design:
 
-## future functions:
-- schedule publish
-- viewer/user accounts
-- comments
-- view, like/dislike, share counter
-
 ## basic function:
 
-### blog management:
-- add blogs
-- edit blogs
-- archive blogs (no deleting blogs ever)
+### **Creation**
+- **Blogs:**
+  - Add blogs
+- **Blog Images:**
+  - Add images
+- **Tags:**
+  - Create tags
 
-### blog viewing:
-- search blogs
-- get specific amoutn of blogs by sorting
-- get specific blog
-- get blog cards (card is just the title, image, link, and a short description)
+### **Update**
+- **Blogs:**
+  - Edit blogs
+- **Tags:**
+  - Edit tags
+- **Tags with Blogs:**
+  - Assign tags to blogs
 
-### blog images:
-- add images
-- remove images
-- get images
+### **Delete/Archive**
+- **Blogs:**
+  - Archive blogs (no deleting blogs ever)
+- **Blog Images:**
+  - Remove images
+- **Tags:**
+  - Remove tags
 
-### tags:
-- create tags
-- rename tags
-- remove tags
-
-### tags with blogs:
-- assign tags to blogs
-- get blogs by tags
+### **Get**
+- **Blog Viewing:**
+  - Get specific amount of blogs with sorting
+  - Get specific blog
+  - Get blog cards (title, subtitle, tagline, image, link)
+- **Tags with Blogs:**
+  - Get blogs by tags
+- **Blog Images:**
+  - Get public image link
 
 ## blog entity:
 
@@ -77,3 +80,13 @@
 - id (in format of i1, i2, i3, ... instead of just int)
 - name
 - alt
+
+## future functions:
+- schedule publish
+- viewer/user accounts
+- comments
+- view, like/dislike, share counter
+- analytics
+- search
+- blog series
+- blog drafts

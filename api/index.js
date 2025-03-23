@@ -1,11 +1,12 @@
+import { Blogs } from "./blogs";
+
 export default {
 	fetch(request, env) {
 		const url = new URL(request.url);
 		if (url.pathname.startsWith("/api")) {
 			const [, route] = url.pathname.split("/").filter(Boolean);
 			const routeHandlers = {
-				route1: handleRoute1,
-				route2: handleRoute2,
+				test: handleTest,
 				default: (() => {
 					return Response.json({
 						message: "Unknown /api route",
@@ -21,18 +22,10 @@ export default {
 	},
 };
 
-function handleRoute1(request, env, url, queryParams) {
+function handleTest(request, env, url, queryParams) {
+	const x = Blogs(env).getBlogCount();
 	return Response.json({
-		message: "Handling /api/route1",
-		resource: "route1",
-		queryParams,
-	});
-}
-
-function handleRoute2(request, env, url, queryParams) {
-	return Response.json({
-		message: "Handling /api/route2",
-		resource: "route2",
+		message: `Count: ${x}`,
 		queryParams,
 	});
 }
