@@ -10,10 +10,8 @@ export default Sentry.withSentry(
 			const url = new URL(request.url);
 
 			if (url.pathname.startsWith("/api/")) {
-				setTimeout(() => {
-					throw new Error("Test error: Sentry setup complete!");
-				  }, 1000);
-				  
+				throw new Error("Test error: Sentry setup complete!");;
+
 				return Response.json({
 					name: "Cloudflare",
 				});
