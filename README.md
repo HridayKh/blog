@@ -43,18 +43,18 @@
 - tagline
 - content (blog content is mdx)
 - tags
-- images
+- images (can be uploaded septerately and then refered to)
 - date
 
-### blog db:
+### blogs db:
 - id (in format of b1, b2, b3, ... instead of just int)
 - title
 - subtitle
 - tagline
 - content
 - tags (json array format for tag ids due to json is easy parse, ex: ["t1", "t2", "t3"] where t1, t2, t3 are tag ids)
-- image (json array format for image ids , ex: ["i1", "i2", "i3"] where i1, i2, i3 are image ids)
-- date
+- publish_date
+- archived
 
 ## tag entity:
 
@@ -65,18 +65,15 @@
 ### tag db:
 - id (in format of t1, t2, t3, ... instead of just int)
 - name
-- color (in hex format with #, ex: #ff0000 instead of just ff0000)
-
+- hex (ccolor in hex format with `#` included, ex: `#ff0000` instead of just `ff0000`)
 
 ## image entity:
 
 ### image parts:
 - name
 - alt
-- path to image (url is generated using path of image in storage bucket)
 
 ### image db:
 - id (in format of i1, i2, i3, ... instead of just int)
 - name
 - alt
-- path
