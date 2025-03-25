@@ -30,6 +30,7 @@
 
 ### **Get**
 - **Blog Viewing:**
+  - Get Blog Count
   - Get specific amount of blogs with sorting
   - Get specific blog
   - Get blog cards (title, subtitle, tagline, image, link)

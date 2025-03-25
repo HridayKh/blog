@@ -1,31 +1,28 @@
-import { getBlogsCount } from "./blogs";
+import { getBlogCount } from "./blogs.js";
 
 export default {
-	fetch(request, env) {
+	async fetch(request, env) {
 		const url = new URL(request.url);
-		if (url.pathname.startsWith("/api")) {
-			const [, route] = url.pathname.split("/").filter(Boolean);
+
+		if (url.pathname.startsWith("/api/")) {
+			const route = url.pathname.replace(/^\/api\/|\/$/g, ""); // Extract clean route name
+
 			const routeHandlers = {
-				test: getBlogsCount,
-				default: (() => {
-					return Response.json({
-						message: "Unknown /api route",
-						path: url.pathname,
-					});
-				}),
+				count: getBlogCount,
+				default: async () =>
+					new Response(
+						JSON.stringify({
+							message: "Unknown /api route",
+							path: url.pathname,
+						}),
+						{ headers: { "Content-Type": "application/json" }, status: 404 }
+					),
 			};
 			const handler = routeHandlers[route] || routeHandlers.default;
-			const queryParams = Array.from(url.searchParams.entries());
-			return handler(request, env, queryParams);
+			const queryParams = Object.fromEntries(url.searchParams);
+			return await handler(request, env, queryParams);
 		}
+
 		return env.ASSETS.fetch(request);
 	},
 };
-
-function handleTest(request, env, queryParams) {
-	const x = getBlogsCount(env);
-	return Response.json({
-		message: `Count: ${x}`,
-		queryParams,
-	});
-}
