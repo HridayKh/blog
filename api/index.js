@@ -1,14 +1,15 @@
-import { getBlogCount } from "./blogs.js";
+import { getBlogCount, getBlogsByDate } from "./blogs.js";
 
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
 
 		if (url.pathname.startsWith("/api/")) {
-			const route = url.pathname.replace(/^\/api\/|\/$/g, ""); // Extract clean route name
+			const route = url.pathname.replace(/^\/api\/|\/$/g, "");
 
 			const routeHandlers = {
-				count: getBlogCount,
+				blogCount: getBlogCount,
+				blogsByDate: getBlogsByDate,
 				default: async () =>
 					new Response(
 						JSON.stringify({
