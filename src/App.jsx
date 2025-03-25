@@ -13,13 +13,13 @@ export default function App() {
 }
 
 function Home() {
-	return 
-		<div>
+	return (
+		< div >
 			<nav>
 				<Link to="/">Home</Link>
 				<Link to="/about">About</Link>
 			</nav>
-		</div>;
+		</div >);
 }
 
 function About() {
@@ -31,8 +31,7 @@ function About() {
 				<Link to="/">Home</Link>
 				<Link to="/about">About</Link>
 			</nav>
-		</div>
-	);
+		</div>);
 }
 
 function NotFound() {
