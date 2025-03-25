@@ -1,18 +1,17 @@
-import { createClient } from '@supabase/supabase-js'
+export default async function getBlogsCount(env) {
 
-export class Blogs {
-	constructor(env) {
-		this.supabase = createClient(env.VITE_SUPABASE_URL, env.VITE_SUPABASE_ANON_KEY)
-	}
-
-	static async getBlogCount() {
-		const { data, error } = await supabase
-			.from('blogs', {head: true, count: 'exact'})
-			.select('id')
-		if (error) {
-			console.error(error)
-			return
+	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs?select=id`, {
+		headers: {
+			"apikey": env.VITE_SUPABASE_ANON_KEY
 		}
-		console.log(data)
-	}
+	});
+
+	const data = await resp.json();
+
+	return new Response(JSON.stringify(data), {
+		headers: {
+			"content-type": "application/json",
+		},
+	});
+
 }

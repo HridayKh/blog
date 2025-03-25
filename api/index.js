@@ -1,4 +1,4 @@
-import { Blogs } from "./blogs";
+import { getBlogsCount } from "./blogs";
 
 export default {
 	fetch(request, env) {
@@ -6,7 +6,7 @@ export default {
 		if (url.pathname.startsWith("/api")) {
 			const [, route] = url.pathname.split("/").filter(Boolean);
 			const routeHandlers = {
-				test: handleTest,
+				test: getBlogsCount,
 				default: (() => {
 					return Response.json({
 						message: "Unknown /api route",
@@ -16,14 +16,14 @@ export default {
 			};
 			const handler = routeHandlers[route] || routeHandlers.default;
 			const queryParams = Array.from(url.searchParams.entries());
-			return handler(request, env, url, queryParams);
+			return handler(request, env, queryParams);
 		}
 		return env.ASSETS.fetch(request);
 	},
 };
 
-function handleTest(request, env, url, queryParams) {
-	const x = Blogs(env).getBlogCount();
+function handleTest(request, env, queryParams) {
+	const x = getBlogsCount(env);
 	return Response.json({
 		message: `Count: ${x}`,
 		queryParams,
