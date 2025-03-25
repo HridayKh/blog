@@ -1,4 +1,4 @@
-import { getBlogCount, getBlogsByDate, getSpecificBlog } from "./blogs.js";
+import { createBlog, getBlogCount, getBlogsByDate, getBlogsByTags, getSpecificBlog } from "./blogs.js";
 
 export default {
 	async fetch(request, env) {
@@ -11,6 +11,8 @@ export default {
 				blogCount: getBlogCount,
 				blogsByDate: getBlogsByDate,
 				SpecificBlog: getSpecificBlog,
+				blogsByTags: getBlogsByTags,
+				createBlog: createBlog,
 				default: async () =>
 					new Response(
 						JSON.stringify({

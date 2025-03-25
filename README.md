@@ -4,9 +4,19 @@
 
 ## basic function:
 
-### **Creation**
-- **Blogs:**
-  - Add blogs
+### **Get**			TODO: IMAGE
+- **Blog Viewing:**
+  - Get Blog Count  					✅✔️
+  - Get blogs by date, count and offset ✅✔️
+  - Get specific blog by id				✅✔️
+- **Tags with Blogs:**
+  - Get blogs by tags					✅✔️
+- **Blog Images:**
+  - Get public image link
+
+### **Create**  	TODO: IMAGE
+- **Blogs:**  
+  - Create Blogs						✅✔️
 - **Blog Images:**
   - Add images
 - **Tags:**
@@ -28,20 +38,11 @@
 - **Tags:**
   - Remove tags
 
-### **Get**
-- **Blog Viewing:**
-  - Get Blog Count
-  - Get blogs by date, count and offset
-  - Get specific blog
-  - Get blog cards (title, subtitle, tagline, image, link)
-- **Tags with Blogs:**
-  - Get blogs by tags
-- **Blog Images:**
-  - Get public image link
+## entities:
 
-## blog entity:
+### blog entity:
 
-### blog parts:
+#### blog parts:
 - title
 - subtitle
 - tagline
@@ -50,7 +51,7 @@
 - images (can be uploaded septerately and then refered to)
 - date
 
-### blogs db:
+#### blogs db:
 - id (in format of b1, b2, b3, ... instead of just int)
 - title
 - subtitle
@@ -60,24 +61,24 @@
 - publish_date
 - archived
 
-## tag entity:
+### tag entity:
 
-### tag parts:
+#### tag parts:
 - name
 - color
 
-### tag db:
+#### tag db:
 - id (in format of t1, t2, t3, ... instead of just int)
 - name
 - hex (ccolor in hex format with `#` included, ex: `#ff0000` instead of just `ff0000`)
 
-## image entity:
+### image entity:
 
-### image parts:
+#### image parts:
 - name
 - alt
 
-### image db:
+#### image db:
 - id (in format of i1, i2, i3, ... instead of just int)
 - name
 - alt
