@@ -1,4 +1,4 @@
-import { getBlogCount, getBlogsByDate } from "./blogs.js";
+import { getBlogCount, getBlogsByDate, getSpecificBlog } from "./blogs.js";
 
 export default {
 	async fetch(request, env) {
@@ -10,6 +10,7 @@ export default {
 			const routeHandlers = {
 				blogCount: getBlogCount,
 				blogsByDate: getBlogsByDate,
+				SpecificBlog: getSpecificBlog,
 				default: async () =>
 					new Response(
 						JSON.stringify({

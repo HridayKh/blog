@@ -36,3 +36,29 @@ export async function getBlogsByDate(request, env, queryParams) {
 	});
 
 }
+export async function getSpecificBlog(request, env, queryParams) {
+	const id = queryParams.id; // id is in format b1, b2, etc
+	if (id === undefined || id === "" || id === null || /^b\d+$/.test(id) === false) {
+		return new Response(JSON.stringify({ message: "invalid or missing blog ID" }), {
+			headers: {
+				"content-type": "application/json",
+			},
+			status: 400,
+		});
+	}
+	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs?id=eq.${id}`, {
+		method: "GET",
+		headers: {
+			"apikey": env.VITE_SUPABASE_ANON_KEY
+		}
+	});
+
+	const data = await resp.json();
+
+	return new Response(JSON.stringify(data), {
+		headers: {
+			"content-type": "application/json",
+		},
+	});
+
+}
