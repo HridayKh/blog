@@ -1,4 +1,5 @@
-import { createBlog, getBlogCount, getBlogsByDate, getBlogsByTags, getSpecificBlog } from "./blogs.js";
+import { getBlogCount, getBlogsByDate, getBlogsByTags, getSpecificBlog } from "./get.js";
+import { createBlog, createTag } from "./create.js";
 
 export default {
 	async fetch(request, env) {
@@ -13,6 +14,7 @@ export default {
 				SpecificBlog: getSpecificBlog,
 				blogsByTags: getBlogsByTags,
 				createBlog: createBlog,
+				createTag: createTag,
 				default: async () =>
 					new Response(
 						JSON.stringify({
@@ -24,7 +26,7 @@ export default {
 			};
 			const handler = routeHandlers[route] || routeHandlers.default;
 			const queryParams = Object.fromEntries(url.searchParams);
-			return await handler(request, env, queryParams);
+			return await handler(env, queryParams);
 		}
 
 		return env.ASSETS.fetch(request);

@@ -20,7 +20,7 @@
 - **Blog Images:**
   - Add images
 - **Tags:**
-  - Create tags
+  - Create tags							✅✔️
 
 ### **Update**
 - **Blogs:**
