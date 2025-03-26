@@ -22,21 +22,16 @@
 - **Tags:**
   - Create tags							✅✔️
 
-### **Update**
+### **Update** 		TODO: IMAGE
 - **Blogs:**
-  - Edit blogs
+  - Edit blogs							✅✔️
 - **Tags:**
-  - Edit tags
-- **Tags with Blogs:**
-  - Assign tags to blogs
+  - Edit tags							✅✔️
+- **Image:**
+  - Edit Image Info
 
-### **Delete/Archive**
-- **Blogs:**
-  - Archive blogs (no deleting blogs ever)
-- **Blog Images:**
-  - Remove images
-- **Tags:**
-  - Remove tags
+### **Delete**:
+- deleting is not allowed due to id determing logic, name items `DELETED` so they are ignored by the system
 
 ## entities:
 
