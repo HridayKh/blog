@@ -1,6 +1,6 @@
 export async function updateBlog(env, queryParams) {
     const updateData = {};
-    const allowedColumns = ["title", "subtitle", "tagline", "content", "tags", "archived"];
+    const allowedColumns = ["title", "subtitle", "tagline", "content", "tags", "archived", "image_id"];
 
     for (const key of allowedColumns) {
         if (queryParams[key] !== undefined) {
