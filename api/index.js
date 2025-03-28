@@ -5,7 +5,18 @@ import { updateBlog, updateImage, updateTag } from "./update.js";
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
-		if (request.method === "POST" && new URL(request.url).pathname === "/api/uploadImage") {
+		const route = url.pathname.replace(/^\/api\/|\/$/g, "");
+		if (["createBlog", "createTag", "updateBlog", "updateTag", "updateImage", "uploadImage"].includes(route)) {
+			const auth = await isAuthenticated(request, env);
+			if (!auth) {
+				return new Response(JSON.stringify({ error: "Unauthorized" }), {
+					status: 403, headers: {
+						"content - type": "application / json"
+					}
+				});
+			}
+		}
+		if (request.method === "POST" && route === "uploadImage") {
 			const contentType = request.headers.get("content-type") || "";
 
 			if (!contentType.startsWith("multipart/form-data")) {
@@ -35,7 +46,6 @@ export default {
 			}
 		}
 		if (url.pathname.startsWith("/api/")) {
-			const route = url.pathname.replace(/^\/api\/|\/$/g, "");
 			const routeHandlers = {
 				listBlogs: getBlogsByDate,
 				listTags: getTags,
@@ -69,3 +79,16 @@ export default {
 		return env.ASSETS.fetch(request);
 	},
 };
+
+async function isAuthenticated(request, env) {
+	const authHeader = request.headers.get("Authorization");
+
+	if (!authHeader) return false;
+
+	const data = new TextEncoder().encode(authHeader);
+	const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+	const hashArray = Array.from(new Uint8Array(hashBuffer));
+	const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+
+	return hashHex.trim() == `${env.ADMIN_PASSWORD}`.trim();
+}
