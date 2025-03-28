@@ -1,6 +1,6 @@
-import { getBlogCount, getBlogsByDate, getBlogsByTags, getImageList, getSpecificBlog, getTags } from "./get.js";
+import { getBlogCount, getBlogsByDate, getBlogsByTags, getImageList, getBlogById, getTags } from "./get.js";
 import { createBlog, createTag, uploadToOCI } from "./create.js";
-import { updateBlog, updateTag } from "./update.js";
+import { updateBlog, updateImage, updateTag } from "./update.js";
 
 export default {
 	async fetch(request, env) {
@@ -37,18 +37,20 @@ export default {
 		if (url.pathname.startsWith("/api/")) {
 			const route = url.pathname.replace(/^\/api\/|\/$/g, "");
 			const routeHandlers = {
-				blogCount: getBlogCount,
-				blogsByDate: getBlogsByDate,
-				SpecificBlog: getSpecificBlog,
+				listBlogs: getBlogsByDate,
+				listTags: getTags,
+				listImages: getImageList,
+
+				countBlogs: getBlogCount,
+				blogById: getBlogById,
 				blogsByTags: getBlogsByTags,
-				tagList: getTags,
-				imageList: getImageList,
 
 				createBlog: createBlog,
 				createTag: createTag,
 
 				updateBlog: updateBlog,
 				updateTag: updateTag,
+				updateImage: updateImage,
 
 				default: async () =>
 					new Response(

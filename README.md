@@ -4,7 +4,7 @@
 
 ## basic function:
 
-### **Get**			TODO: IMAGE
+### **Get**
 - **Blog Viewing:**
   - Get Blog Count  					✅✔️
   - Get blogs by date, count and offset ✅✔️
@@ -13,7 +13,7 @@
   - Get blogs by tags					✅✔️
   - Get tags							✅✔️
 - **Blog Images:**
-  - Get images list
+  - Get images list						✅✔️
 
 ### **Create**
 - **Blogs:**  
@@ -23,16 +23,18 @@
 - **Tags:**
   - Create tags							✅✔️
 
-### **Update** 		TODO: IMAGE
+### **Update**
 - **Blogs:**
   - Edit blogs							✅✔️
 - **Tags:**
   - Edit tags							✅✔️
 - **Image:**
-  - Edit Image Info
+  - Edit Image Info						✅✔️
 
 ### **Delete**:
-- deleting is not allowed due to id determing logic, name items `DELETED` so they are ignored by the system
+- deleting is not allowed due to id determing logic, name items `[DELETED]` so they are ignored by the system
+- for blog, just archive them
+- too lazy to add archive to image and tag so just call em `[DELETED]` and ignore them
 
 ## entities:
 
