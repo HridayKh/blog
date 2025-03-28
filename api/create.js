@@ -57,5 +57,59 @@ export async function createTag(env, queryParams) {
 	return new Response(JSON.stringify({ message: "successful" }), {
 		headers: { "content-type": "application/json" },
 	});
+}
+export async function uploadToOCI(file, env, queryParams) {
+    const resp2 = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/images?select=id`, {
+        method: "HEAD",
+        headers: {
+            "apikey": env.VITE_SUPABASE_ANON_KEY,
+            "Prefer": "count=exact"
+        }
+    });
 
+    const contentRange = resp2.headers.get("content-range");
+    const totalCount = contentRange ? parseInt(contentRange.split("/")[1], 10) : 0;
+
+    const fileExt = file.name.split(".").pop() || "";
+    const objectName = `i${totalCount + 1}.${fileExt}`;
+    
+    try {
+        const response = await fetch(`${env.VITE_OCI_PAR_URL}/${encodeURIComponent(objectName)}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": file.type || "application/octet-stream"
+            },
+            body: await file.arrayBuffer(),
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text().catch(() => "Unknown error");
+            return new Response(JSON.stringify({ error: "Failed to upload", details: errorText }), {
+                headers: { "content-type": "application/json" },
+            });
+        }
+
+        const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/images`, {
+            method: "POST",
+            headers: {
+                "apikey": env.VITE_SUPABASE_ANON_KEY,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: `i${totalCount + 1}`,
+                name: queryParams.name || file.name,
+                alt: queryParams.alt || queryParams.name || file.name,
+                url: `${env.VITE_OCI_URL}/${objectName}`,
+            })
+        });
+
+        return new Response(JSON.stringify({ message: "successful" }), {
+            headers: { "content-type": "application/json" },
+        });
+
+    } catch (error) {
+        return new Response(JSON.stringify({ error: "Network error during upload", details: error.message }), {
+            headers: { "content-type": "application/json" },
+        });
+    }
 }
