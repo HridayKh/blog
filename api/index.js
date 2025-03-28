@@ -1,4 +1,4 @@
-import { getBlogCount, getBlogsByDate, getBlogsByTags, getSpecificBlog } from "./get.js";
+import { getBlogCount, getBlogsByDate, getBlogsByTags, getImageList, getSpecificBlog } from "./get.js";
 import { createBlog, createTag } from "./create.js";
 import { updateBlog, updateTag } from "./update.js";
 
@@ -18,6 +18,7 @@ export default {
 				createTag: createTag,
 				updateBlog: updateBlog,
 				updateTag: updateTag,
+				imageList: getImageList,
 				default: async () =>
 					new Response(
 						JSON.stringify({

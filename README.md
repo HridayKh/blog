@@ -12,13 +12,14 @@
 - **Tags with Blogs:**
   - Get blogs by tags					✅✔️
 - **Blog Images:**
-  - Get public image link
+  - Get images list						✅✔️
+  - Get public image link				✅✔️
 
 ### **Create**  	TODO: IMAGE
 - **Blogs:**  
   - Create Blogs						✅✔️
 - **Blog Images:**
-  - Add images
+  - Upload images
 - **Tags:**
   - Create tags							✅✔️
 

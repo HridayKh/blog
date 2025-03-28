@@ -33,7 +33,6 @@ export async function getBlogsByDate(env, queryParams) {
 			"content-type": "application/json",
 		},
 	});
-
 }
 export async function getSpecificBlog(env, queryParams) {
 	const id = queryParams.id; // id is in format b1, b2, etc
@@ -84,4 +83,21 @@ export async function getBlogsByTags(env, queryParams) {
 		},
 	});
 
+}
+export async function getImageList(env, queryParams) {
+	const offset = queryParams.offset || 0;
+	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/images?offset=${offset}`, {
+		method: "GET",
+		headers: {
+			"apikey": env.VITE_SUPABASE_ANON_KEY
+		}
+	});
+
+	const data = await resp.json();
+
+	return new Response(JSON.stringify(data), {
+		headers: {
+			"content-type": "application/json",
+		},
+	});
 }
