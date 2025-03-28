@@ -1,5 +1,5 @@
 export async function getBlogCount(env, queryParams) {
-	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs?select=id`, {
+	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs?select=id,archived&archived=neq.true`, {
 		method: "HEAD",
 		headers: {
 			"apikey": env.VITE_SUPABASE_ANON_KEY,
@@ -19,7 +19,7 @@ export async function getBlogCount(env, queryParams) {
 export async function getBlogsByDate(env, queryParams) {
 	const limit = queryParams.limit || 10;
 	const offset = queryParams.offset || 0;
-	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs?order=publish_date.desc&limit=${limit}&offset=${offset}`, {
+	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs?order=publish_date.desc&limit=${limit}&offset=${offset}&archived=neq.true`, {
 		method: "GET",
 		headers: {
 			"apikey": env.VITE_SUPABASE_ANON_KEY
@@ -84,9 +84,28 @@ export async function getBlogsByTags(env, queryParams) {
 	});
 
 }
-export async function getImageList(env, queryParams) {
+export async function getTags(env, queryParams) {
+	const limit = queryParams.limit || 10;
 	const offset = queryParams.offset || 0;
-	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/images?offset=${offset}`, {
+	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/tags?order=id.desc&name=neq.[DELETED]`, {
+		method: "GET",
+		headers: {
+			"apikey": env.VITE_SUPABASE_ANON_KEY
+		}
+	});
+
+	const data = await resp.json();
+
+	return new Response(JSON.stringify(data), {
+		headers: {
+			"content-type": "application/json",
+		},
+	});
+}
+export async function getImageList(env, queryParams) {
+	const limit = queryParams.limit || 10;
+	const offset = queryParams.offset || 0;
+	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/images?order=id.desc&name=neq.[DELETED]`, {
 		method: "GET",
 		headers: {
 			"apikey": env.VITE_SUPABASE_ANON_KEY

@@ -9,17 +9,17 @@
   - Get Blog Count  					✅✔️
   - Get blogs by date, count and offset ✅✔️
   - Get specific blog by id				✅✔️
-- **Tags with Blogs:**
+- **Tags:**
   - Get blogs by tags					✅✔️
+  - Get tags							✅✔️
 - **Blog Images:**
-  - Get images list						✅✔️
-  - Get public image link				✅✔️
+  - Get images list
 
-### **Create**  	TODO: IMAGE
+### **Create**
 - **Blogs:**  
   - Create Blogs						✅✔️
 - **Blog Images:**
-  - Upload images
+  - Upload images						✅✔️
 - **Tags:**
   - Create tags							✅✔️
 
@@ -78,6 +78,7 @@
 - id (in format of i1, i2, i3, ... instead of just int)
 - name
 - alt
+- url (public url to access the image)
 
 ## future functions:
 - schedule publish
