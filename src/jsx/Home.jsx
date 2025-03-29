@@ -24,7 +24,7 @@ function BlogCard() {
 		<div className="col">
 			<Link to="/b/b1" className="text-decoration-none">
 				<div className="card bg-dark h-100">
-					<img src="https://placehold.co/600x400/505050/FFF" className="card-img-top" alt="Placeholder Image" />
+					<img src="https://placehold.co/15x10/505050/FFF" className="card-img-top" alt="Placeholder Image"/>
 					<div className="card-body">
 						<h2 className="card-title text-primary mb-0">Blog Title</h2>
 						<p className="card-title text-secondary">Blog Subtitle</p>
