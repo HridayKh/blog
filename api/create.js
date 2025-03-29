@@ -1,4 +1,4 @@
-import { getBlogCount } from "./get.js";
+import { getBlogCount } from "/api/get.js";
 
 export async function createBlog(env, queryParams) {
 	const COUNT = await getBlogCount(request, env, queryParams);
