@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 
 export default function Home() {
@@ -21,19 +22,18 @@ export default function Home() {
 function BlogCard() {
 	return (
 		<div className="col">
-			<a href="/" className="text-decoration-none">
+			<Link to="/b/b1" className="text-decoration-none">
 				<div className="card bg-dark h-100">
-					<img src="https://placehold.co/600x400/505050/FFF" className="card-img-top" alt="..." />
+					<img src="https://placehold.co/600x400/505050/FFF" className="card-img-top" alt="Placeholder Image" />
 					<div className="card-body">
-						<h4 className="card-title text-primary mb-0">Blog Title</h4>
+						<h2 className="card-title text-primary mb-0">Blog Title</h2>
 						<p className="card-title text-secondary">Blog Subtitle</p>
 						<p className="card-text">
-							The blog tagline is used to avoid needing to extract text from the mdx blog itself and save on needing to do uselexx compute...
-							<span className="text-accent"> Read More</span>
+							The blog tagline is used to avoid needing to extract text from the mdx blog itself and save on needing to do uselexx compute.....<span className="link">Read More</span>
 						</p>
 					</div>
 				</div>
-			</a>
+			</Link>
 		</div>
 	);
 }
