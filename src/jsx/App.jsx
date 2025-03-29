@@ -8,7 +8,6 @@ export default function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/b/:id" element={<Blog />} />
-				<Route path="/t/:tags/:andOr" element={<Blog />} />
 				<Route path="*" element={<Home />} />
 			</Routes>
 		</Router>

@@ -1,56 +1,54 @@
-import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 export default function Navbar() {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 
-  // List of tags (customize as needed)
-  const tags = ["Tech", "JavaScript", "React", "Backend", "AI"];
+	const tags = ["Tech", "JavaScript", "React", "Backend", "AI"];
+	const selectedTags = searchParams.get("tags")?.split(",") || [];
+	const mode = searchParams.get("mode") || "and";
 
-  // Get selected tags from URL
-  const selectedTags = searchParams.get("tags")?.split(",") || [];
+	// Toggle tag selection
+	const handleTagClick = (tag) => {
+		let updatedTags = selectedTags.includes(tag)
+			? selectedTags.filter((t) => t !== tag) // Remove if already selected
+			: [...selectedTags, tag]; // Add new tag
 
-  // Toggle tag selection
-  const handleTagClick = (tag) => {
-    let updatedTags = selectedTags.includes(tag)
-      ? selectedTags.filter((t) => t !== tag) // Remove if already selected
-      : [...selectedTags, tag]; // Add new tag
+		setSearchParams({ tags: updatedTags.join(","), mode });
+	};
 
-    setSearchParams({ tags: updatedTags.join(",") });
-  };
+	// Toggle filter mode (AND <-> OR)
+	const toggleMode = () => {
+		setSearchParams({ tags: selectedTags.join(","), mode: mode === "or" ? "and" : "or" });
+	};
 
-  return (
-    <nav className="navbar navbar-expand-sm bg-dark" data-bs-theme="dark">
-      <div className="container-fluid">
-        <a className="navbar-brand text-accent" href="/">Hriday's Blogs</a>
+	return (
+		<nav className="navbar navbar-expand bg-dark px-5 mx-0" data-bs-theme="dark">
+			<div className="container-fluid d-flex flex-column flex-sm-row justify-content-between">
+				
+				{/* Brand */}
+				<h1 className="navbar-brand text-accent m-0" href="/">Hriday's Blogs</h1>
 
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+				{/* Tag Filters */}
+				<div className="d-flex flex-wrap align-items-center gap-2">
+					<button
+						className={`btn ${mode === "or" ? "btn-success" : "btn-success"}`}
+						onClick={toggleMode}>
+						{mode.toUpperCase()}
+					</button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <a className="nav-link text-light btn btn-light" href="#">Services</a>
-            </li>
-          </ul>
+					<div className="vr text-accent"></div>
 
-          {/* Tag Filter Section */}
-          <div className="ms-3">
-            {tags.map((tag) => (
-              <button
-                key={tag}
-                className={`btn btn-sm me-2 ${selectedTags.includes(tag) ? "btn-primary" : "btn-outline-secondary"}`}
-                onClick={() => handleTagClick(tag)}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
+					{tags.map((tag) => (
+						<button
+							key={tag}
+							className={`btn btn-sm ${selectedTags.includes(tag) ? "btn-primary" : "btn-outline-secondary"}`}
+							onClick={() => handleTagClick(tag)}>
+							{tag}
+						</button>
+					))}
+				</div>
+				
+			</div>
+		</nav>
+	);
 }

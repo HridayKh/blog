@@ -1,17 +1,17 @@
 $primary: #FF6B00;
 $secondary: #00E5FF;
 
-$success: #198754;
-$info: #0dcaf0;
-$warning: #ffc107;
-$danger: #dc3545;
+$success: #16A34A;
+$info: #0ABAB5;
+$warning: #FFB100;
+$danger: #D90429;
 
-$light: #ffffff;
-$dark: #0D0D0D;
+$light: #EDEDED;
+$dark: #1b1b1b;
 
 $body-bg: #050505;
-$body-color: #bebebe;
-$highlight: #FFD700;
+$body-color: #BEBEBE;
+$accent: #FFD700;
 
 $theme-colors: (
 	"primary": $primary,
@@ -24,7 +24,7 @@ $theme-colors: (
 	"dark": $dark,
 	"background": $body-bg,
 	"text": $body-color,
-	"accent": $highlight
+	"accent": $accent
 );
 
 @import "bootstrap/scss/bootstrap";
