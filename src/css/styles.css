@@ -1,6 +1,6 @@
 :root {
-	--prm: #FF6B00;
-	--scd: #00E5FF;
+	--primary: #FF6B00;
+	--secondary: #00E5FF;
 	--bg: #0D0D0D;
 	--bg-dark: #050505;
 	--text: #bebebe;
@@ -24,34 +24,6 @@ body {
 	width: 100%;
 	padding: 2em;
 	background-color: var(--bg-dark);
-}
-
-.col {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5em;
-}
-
-.left-col {
-	flex: 2;
-	/* Make this column wider */
-}
-
-.right-col {
-	flex: 3;
-	/* Adjust this column proportionally */
-}
-
-
-.col>div {
-	background-color: var(--bg);
-	margin: 0.5em;
-	padding: 1em;
-	font-size: 1.5em;
-	border: 2px solid transparent;
-	border-radius: 10px;
-	box-shadow: 0 0 10px var(--acc);
-	/* Glowing effect */
 }
 
 .link {
@@ -78,11 +50,8 @@ ul li {
 
 hr {
 	border: 0;
-	/* Remove default styling */
 	border-top: 2px solid var(--acc);
-	/* Create the line using border */
 	margin: 20px auto;
-	/* Center and add spacing */
 }
 
 p {

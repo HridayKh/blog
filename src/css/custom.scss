@@ -1,0 +1,30 @@
+$primary: #FF6B00;
+$secondary: #00E5FF;
+
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+
+$light: #ffffff;
+$dark: #0D0D0D;
+
+$body-bg: #050505;
+$body-color: #bebebe;
+$highlight: #FFD700;
+
+$theme-colors: (
+	"primary": $primary,
+	"secondary": $secondary,
+	"success": $success,
+	"info": $info,
+	"warning": $warning,
+	"danger": $danger,
+	"light": $light,
+	"dark": $dark,
+	"background": $body-bg,
+	"text": $body-color,
+	"accent": $highlight
+);
+
+@import "bootstrap/scss/bootstrap";
