@@ -1,6 +1,7 @@
 import { getBlogCount, getBlogsByDate, getBlogsByTags, getImageList, getBlogById, getTags } from "/api/get.js";
 import { createBlog, createTag, uploadToOCI } from "/api/create.js";
 import { updateBlog, updateImage, updateTag } from "/api/update.js";
+import { getImage } from "./get";
 
 export default {
 	async fetch(request, env) {
@@ -50,6 +51,8 @@ export default {
 				listBlogs: getBlogsByDate,
 				listTags: getTags,
 				listImages: getImageList,
+
+				imageInfo: getImage,
 
 				countBlogs: getBlogCount,
 				blogById: getBlogById,

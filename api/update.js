@@ -110,6 +110,7 @@ export async function updateTag(env, queryParams) {
     });
 }
 export async function updateImage(env, queryParams) {
+	// TODO - Add validation for URL format
 	const updateData = {};
 	const allowedColumns = ["name", "alt", "url"];
 

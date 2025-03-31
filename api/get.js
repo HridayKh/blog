@@ -17,10 +17,10 @@ export async function getBlogCount(env, queryParams) {
 	});
 }
 export async function getBlogsByDate(env, queryParams) {
-	const limit = parseInt(queryParams.limit, 10) || 10;
-	const offset = parseInt(queryParams.offset, 10) || 0;
-	
-	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs?order=publish_date.desc&limit=${limit}&offset=${offset}&archived=neq.true`, {
+	const limit = queryParams.limit == "none" ? "" : `limit=${parseInt(queryParams.limit, 10) || 10}`;
+	const offset = `offset=${parseInt(queryParams.offset, 10) || 0}`;
+
+	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs?order=publish_date.desc&${limit}&${offset}&archived=neq.true`, {
 		method: "GET",
 		headers: {
 			"apikey": env.VITE_SUPABASE_ANON_KEY
@@ -66,7 +66,7 @@ export async function getBlogsByTags(env, queryParams) {
 	const andOr = queryParams.andOr || "and";
 	const limit = parseInt(queryParams.limit, 10) || 10;
 	const offset = parseInt(queryParams.offset, 10) || 0;
-	
+
 
 	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/rpc/filter_by_json_values_${andOr}?limit=${limit}&offset=${offset}`, {
 		method: "POST",
@@ -109,6 +109,24 @@ export async function getImageList(env, queryParams) {
 	const offset = parseInt(queryParams.offset, 10) || 0;
 
 	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/images?order=id.desc&name=neq.[DELETED]`, {
+		method: "GET",
+		headers: {
+			"apikey": env.VITE_SUPABASE_ANON_KEY
+		}
+	});
+
+	const data = await resp.json();
+
+	return new Response(JSON.stringify(data), {
+		headers: {
+			"content-type": "application/json",
+		},
+	});
+}
+export async function getImage(env, queryParams) {
+	const id = queryParams.id;
+
+	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/images?id=eq.${id}&name=neq.[DELETED]`, {
 		method: "GET",
 		headers: {
 			"apikey": env.VITE_SUPABASE_ANON_KEY
