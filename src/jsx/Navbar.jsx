@@ -14,7 +14,7 @@ export default function Navbar() {
 	}, []);
 
 	const selectedTagIds = searchParams.get("tags")?.split(",") || [];
-	const mode = searchParams.get("mode") || "and";
+	const mode = searchParams.get("mode") || "or";
 
 	// Function to calculate contrast color (black or white) based on background brightness
 	const getTextColor = (hex) => {

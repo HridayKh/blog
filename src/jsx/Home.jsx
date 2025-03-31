@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 export default function Home() {
 	const [searchParams] = useSearchParams();
 	const selectedTagIds = searchParams.get("tags")?.split(",").filter(Boolean) || [];
-	const mode = searchParams.get("mode") || "and";
+	const mode = searchParams.get("mode") || "or";
 
 	// Fetch all blogs and tags
 	const blogs = useDataFetcher("listBlogs?limit=none");
@@ -103,7 +103,8 @@ function daysAgo(dateString) {
 	if (diffDays === 0) return "Today";
 	if (diffDays === 1) return "Yesterday";
 	if (diffDays < 30) return `${diffDays} days ago`;
-	if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+	if (diffDays < 365) return Math.floor(diffDays / 30) == 1 ? `1 month ago` : `${Math.floor(diffDays / 30)} months ago`;
+	if (Math.floor(diffDays / 365) == 1) return "1 year ago";
 	return `${Math.floor(diffDays / 365)} years ago`;
 }
 
