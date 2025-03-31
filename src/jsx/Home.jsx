@@ -23,6 +23,7 @@ export default function Home() {
 					{blogs.map((blog) => (
 						<BlogCard
 							key={blog.id}
+							id = {blog.id}
 							title={blog.title}
 							subtitle={blog.subtitle}
 							tagline={blog.tagline}
@@ -37,11 +38,11 @@ export default function Home() {
 	);
 }
 
-function BlogCard({ title, subtitle, tagline, tags, date, img }) {
+function BlogCard({ id, title, subtitle, tagline, tags, date, img }) {
 	const placeholdImage = "https://placehold.co/600x400/111111/white/png?text=Image+Not+Found";
 	return (
 		<div className="col">
-			<Link to="/b/b1" className="text-decoration-none">
+			<Link to={`/b/${id}`} className="text-decoration-none">
 				<div className="card bg-dark h-100">
 					<img src={img.url || placeholdImage} className="card-img-top border-bottom border-muted" alt={img.alt || "Image Unavailable"} style={{ height: "35vh", width:"100%"}} />
 					<div className="card-body">
