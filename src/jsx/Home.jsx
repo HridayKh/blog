@@ -6,7 +6,6 @@ export default function Home() {
 	const blogs = useDataFetcher("listBlogs?limit=none");
 	const images = useDataFetcher("listImages"); // Fetch all images at once
 
-	// Create a map for faster image lookup
 	const imageMap = images.reduce((acc, img) => {
 		acc[img.id] = img;
 		return acc;
@@ -23,7 +22,7 @@ export default function Home() {
 					{blogs.map((blog) => (
 						<BlogCard
 							key={blog.id}
-							id = {blog.id}
+							id={blog.id}
 							title={blog.title}
 							subtitle={blog.subtitle}
 							tagline={blog.tagline}
@@ -44,15 +43,15 @@ function BlogCard({ id, title, subtitle, tagline, tags, date, img }) {
 		<div className="col">
 			<Link to={`/b/${id}`} className="text-decoration-none">
 				<div className="card bg-dark h-100">
-					<img src={img.url || placeholdImage} className="card-img-top border-bottom border-muted" alt={img.alt || "Image Unavailable"} style={{ height: "35vh", width:"100%"}} />
-					<div className="card-body">
+					<img src={img.url || placeholdImage} className="card-img-top border-bottom border-muted" alt={img.alt || "Image Unavailable"} style={{ height: "35vh", width: "100%" }} />
+					<div className="card-body d-flex flex-column">
 						<h2 className="card-title text-primary mb-0">{title}</h2>
 						<p className="card-title text-secondary">{subtitle}</p>
-						<p className="card-text m-0">
+						<p className="card-text m-0 flex-grow-1">
 							{tagline}.....<span className="link">Read More</span>
 						</p>
 						<hr className="my-2" />
-						<div className="d-flex justify-content-between ">
+						<div className="d-flex justify-content-between">
 							<div className="text-accent">
 								{tags.map((tag, index) => (
 									<span key={index} className="badge border border-white-50 text-white-50 rounded-pill me-1">
