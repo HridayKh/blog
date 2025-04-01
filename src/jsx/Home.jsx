@@ -8,9 +8,11 @@ export default function Home() {
 	const mode = searchParams.get("mode") || "or";
 
 	// Fetch all blogs and tags
-	const blogs = useDataFetcher("listBlogs?limit=none");
-	const images = useDataFetcher("listImages");
-	const tagsList = useDataFetcher("listTags"); // Fetch tags to map IDs to names
+	const { data: blogs, loading: blogsLoading } = useDataFetcher("listBlogs?limit=none");
+	const { data: images, loading: imagesLoading } = useDataFetcher("listImages");
+	const { data: tagsList, loading: tagsLoading } = useDataFetcher("listTags");
+
+	const loading = blogsLoading || imagesLoading || tagsLoading;
 
 	// 🛠 Map tag IDs to full tag objects
 	const tagMap = tagsList.reduce((acc, tag) => {
@@ -42,20 +44,24 @@ export default function Home() {
 		<>
 			<Navbar />
 			<div className="container mt-3">
-				<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-3">
-					{filteredBlogs.map((blog) => (
-						<BlogCard
-							key={blog.id}
-							id={blog.id}
-							title={blog.title}
-							subtitle={blog.subtitle}
-							tagline={blog.tagline}
-							tags={blog.tags.map((id) => tagMap[id] || { name: "Unknown", hex: "#999" })} // Convert tag IDs to objects
-							date={blog.publish_date}
-							img={imageMap[blog.image_id] || {}}
-						/>
-					))}
-				</div>
+				{loading ? (
+					<p>Loading blogs...</p>
+				) : (
+					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-3">
+						{filteredBlogs.map((blog) => (
+							<BlogCard
+								key={blog.id}
+								id={blog.id}
+								title={blog.title}
+								subtitle={blog.subtitle}
+								tagline={blog.tagline}
+								tags={blog.tags.map((id) => tagMap[id] || { name: "Unknown", hex: "#999" })}
+								date={blog.publish_date}
+								img={imageMap[blog.image_id] || {}}
+							/>
+						))}
+					</div>
+				)}
 			</div>
 		</>
 	);
@@ -110,13 +116,17 @@ function daysAgo(dateString) {
 
 function useDataFetcher(path) {
 	const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
+		setLoading(true); // Start loading
 		fetch("/api/" + path)
 			.then((res) => res.json())
 			.then(setData)
-			.catch(console.error);
+			.catch(console.error)
+			.finally(() => setLoading(false)); // Stop loading
 	}, [path]);
 
-	return data;
+	return { data, loading };
 }
+

@@ -48,22 +48,23 @@ export default {
 		}
 		if (url.pathname.startsWith("/api/")) {
 			const routeHandlers = {
-				listBlogs: getBlogsByDate,
-				listTags: getTags,
-				listImages: getImageList,
+				listBlogs: getBlogsByDate, // DONE
+				listTags: getTags, // DONE
+				listImages: getImageList, // DONE
 
-				imageInfo: getImage,
+				imageInfo: getImage, // TODO
 
-				countBlogs: getBlogCount,
-				blogById: getBlogById,
-				blogsByTags: getBlogsByTags,
+				countBlogs: getBlogCount, // TODO
+				blogById: getBlogById, // DONE
+				blogsByTags: getBlogsByTags, // TODO
 
-				createBlog: createBlog,
-				createTag: createTag,
+				createBlog: createBlog, // DASH TODO
+				createTag: createTag, // DASH TODO
+				// CREATE IMAGE // DASH TODO
 
-				updateBlog: updateBlog,
-				updateTag: updateTag,
-				updateImage: updateImage,
+				updateBlog: updateBlog, // DASH TODO
+				updateTag: updateTag, // DASH TODO
+				updateImage: updateImage, // DASH TODO
 
 				default: async () =>
 					new Response(
