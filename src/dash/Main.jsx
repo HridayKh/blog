@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CreateBlog, CreateTag, CreateImage } from "./Create.jsx";
 import { UpdateBlog, UpdateTag, UpdateImage } from "./Update.jsx";
 
@@ -31,10 +31,35 @@ export default function Main() {
 }
 
 function Dash() {
+	const [pass, setPass] = useState("");
+	const [isPasswordSet, setIsPasswordSet] = useState("Input Password");
+
+	useEffect(() => {
+		const storedPassword = sessionStorage.getItem("password");
+		if (storedPassword) {
+			setIsPasswordSet("Password OK");
+		}
+	}, []);
+
+	const handleSetPassword = () => {
+		sessionStorage.setItem("password", pass);
+		setIsPasswordSet("Password is updated!");
+
+		setTimeout(() => {
+			setIsPasswordSet("Password OK");
+		}, 3000);
+	};
+
 	return (
 		<div>
-			<h2>Dashboard</h2>
-			<p>Select an action above.</p>
+			<input
+				type="password"
+				name="pass"
+				value={pass}
+				onChange={(e) => setPass(e.target.value)}
+			/>
+			<button onClick={handleSetPassword}>Set Password</button>
+			<p>{isPasswordSet}</p>
 		</div>
 	);
 }
