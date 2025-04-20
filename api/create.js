@@ -1,7 +1,7 @@
 import { getBlogCount } from "/api/get.js";
 
 export async function createBlog(env, queryParams) {
-	const COUNT = await getBlogCount(request, env, queryParams);
+	const COUNT = await getBlogCount(env, queryParams);
 	const countData = await COUNT.json();
 	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs`, {
 		method: "POST",
@@ -20,13 +20,17 @@ export async function createBlog(env, queryParams) {
 				tags: queryParams.tags ? queryParams.tags.split(",") : []
 			})
 	});
-
-	return new Response("{\"message\":\"successful\"}", {
+	const data = await resp.json();
+	if (!resp.ok) {
+		return new Response(JSON.stringify({ error: "Failed to create blog", details: data }), {
+			headers: { "content-type": "application/json" },
+		});
+	}
+	return new Response("{\"message\":\"successful\", \"message\"" + data + "}", {
 		headers: {
 			"content-type": "application/json",
 		},
 	});
-
 }
 export async function createTag(env, queryParams) {
 	const resp2 = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/tags?select=id`, {
