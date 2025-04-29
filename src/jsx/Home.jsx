@@ -68,7 +68,7 @@ export default function Home() {
 }
 
 function BlogCard({ id, title, subtitle, tagline, tags, date, img }) {
-	const placeholdImage = "https://placehold.co/600x400/111111/white/png?text=Image+Not+Found";
+	const placeholdImage = "/img404.png";
 	return (
 		<div className="col">
 			<Link to={`/b/${id}`} className="text-decoration-none">

@@ -1,4 +1,4 @@
-import { getBlogCount } from "/api/get.js";
+import { getBlogCount } from "./get.js";
 
 export async function createBlog(env, queryParams) {
 	const COUNT = await getBlogCount(env, queryParams);
@@ -54,7 +54,7 @@ export async function createTag(env, queryParams) {
 		body: JSON.stringify({
 			id: `t${totalCount + 1}`,
 			name: queryParams.name,
-			hex: `#${queryParams.hex}`
+			hex: `${queryParams.hex.charAt(0) == "#" ? queryParams.hex : "#" + queryParams.hex}`,
 		})
 	});
 

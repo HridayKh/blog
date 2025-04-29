@@ -1,6 +1,15 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export function CreateBlog() {
+	const [tagList, setTagList] = useState([]);
+	useEffect(() => {
+		setLoading(true);
+		fetch("/api/listTags")
+			.then((res) => res.json())
+			.then(setTagList)
+			.catch(console.error)
+			.finally(() => setLoading(false));
+	}, []); // empty array to run once
 	const [formData, setFormData] = useState({
 		title: "",
 		subtitle: "",
@@ -10,27 +19,26 @@ export function CreateBlog() {
 	});
 	const [message, setMessage] = useState("");
 	const [loading, setLoading] = useState(false);
-
-	// Handle input change
 	const handleChange = (e) => {
 		setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 	};
-
-	// Handle form submit
 	const handleSubmit = async (e) => {
-		console.log(sessionStorage.getItem("password"));
 		e.preventDefault();
 		setLoading(true);
 
+		// Check if at least one tag is selected
+		if (formData.tags.trim() === "") {
+			setMessage("You must select at least one tag.");
+			setLoading(false);
+			return; // Prevent form submission
+		}
+
 		try {
-			// Format tags properly
 			const formattedTags = formData.tags
 				.split(",")
 				.map((tag) => tag.trim())
 				.filter((tag) => tag !== "")
 				.join(",");
-
-			// Convert formData to URL params
 			const params = new URLSearchParams({
 				title: formData.title,
 				subtitle: formData.subtitle,
@@ -38,15 +46,11 @@ export function CreateBlog() {
 				content: formData.content,
 				tags: formattedTags,
 			}).toString();
-			// Make the request with GET method + URL params
-			const password = sessionStorage.getItem("password")?.trim(); // Remove any accidental spaces/newlines
-
+			const password = sessionStorage.getItem("password")?.trim();
 			const response = await fetch(`/api/createBlog?${params}`, {
 				method: "POST",
 				headers: { "Authorization": encodeURIComponent(password) },
 			});
-
-
 			const data = await response.json();
 			if (response.ok) setMessage("Blog created successfully!");
 			else setMessage(`Error: ${data.message}`);
@@ -56,7 +60,6 @@ export function CreateBlog() {
 			setLoading(false);
 		}
 	};
-
 	return (
 		<div>
 			<h2>Create Blog</h2>
@@ -69,7 +72,45 @@ export function CreateBlog() {
 				<br /><br />
 				<textarea name="content" placeholder="Content" onChange={handleChange} required />
 				<br /><br />
-				<input type="text" name="tags" placeholder="Tags (comma separated)" onChange={handleChange} />
+				{/*<input type="text" name="tags" placeholder="Tags (comma separated)" onChange={handleChange} />*/}
+				<label>Choose Tags:</label>
+				<br />
+				<div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+					{tagList.map((tag) => {
+						const selectedIds = formData.tags.split(",").filter((id) => id);
+						const isSelected = selectedIds.includes(tag.id.toString());
+						return (
+							<label
+								key={tag.id}
+								style={{
+									backgroundColor: tag.hex,
+									color: "#000",
+									border: isSelected ? "5px solid #505050" : "0px solid #000",
+									borderRadius: "12px",
+									padding: "5px 10px",
+									cursor: "pointer",
+								}}
+							>
+								<input
+									type="checkbox"
+									value={tag.id}
+									checked={isSelected}
+									onChange={(e) => {
+										const current = formData.tags.split(",").filter((t) => t);
+										const updated = e.target.checked
+											? [...current, tag.id.toString()]
+											: current.filter((t) => t !== tag.id.toString());
+										setFormData((prev) => ({ ...prev, tags: updated.join(",") }));
+									}}
+									style={{ display: "none" }}
+								/>
+								{tag.name}
+							</label>
+						);
+					})}
+				</div>
+				{console.log("Tag IDs:", formData.tags)}
+
 				<br /><br />
 				<button type="submit" disabled={loading}>
 					{loading ? "Submitting..." : "Submit"}
@@ -80,11 +121,97 @@ export function CreateBlog() {
 	);
 }
 
-
 export function CreateTag() {
-	return (<div>
-		CreateTag
-	</div>);
+	const [formData, setFormData] = useState({
+		name: "",
+		color: "",
+	});
+	const [message, setMessage] = useState("");
+	const [loading, setLoading] = useState(false);
+	const handleChange = (e) => {
+		setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setLoading(true);
+		try {
+			const params = new URLSearchParams({
+				name: formData.title,
+				color: formData.subtitle,
+			}).toString();
+			const password = sessionStorage.getItem("password")?.trim();
+			const response = await fetch(`/api/createTag?${params}`, {
+				method: "POST",
+				headers: { "Authorization": encodeURIComponent(password) },
+			});
+			const data = await response.json();
+			if (response.ok) setMessage("Blog created successfully!");
+			else setMessage(`Error: ${data.message}`);
+		} catch (error) {
+			setMessage(`Error: ${error.message}`);
+		} finally {
+			setLoading(false);
+		}
+	};
+	return (
+		<div>
+			<h2>Create Blog</h2>
+			<form onSubmit={handleSubmit}>
+				<input type="text" name="title" placeholder="Title" onChange={handleChange} required />
+				<br /><br />
+				<input type="text" name="subtitle" placeholder="Subtitle" onChange={handleChange} required />
+				<br /><br />
+				<input type="text" name="tagline" placeholder="Tagline" onChange={handleChange} required />
+				<br /><br />
+				<textarea name="content" placeholder="Content" onChange={handleChange} required />
+				<br /><br />
+				{/*<input type="text" name="tags" placeholder="Tags (comma separated)" onChange={handleChange} />*/}
+				<label>Choose Tags:</label>
+				<br />
+				<div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+					{tagList.map((tag) => {
+						const selectedIds = formData.tags.split(",").filter((id) => id);
+						const isSelected = selectedIds.includes(tag.id.toString());
+						return (
+							<label
+								key={tag.id}
+								style={{
+									backgroundColor: tag.hex,
+									color: "#000",
+									border: isSelected ? "5px solid #505050" : "0px solid #000",
+									borderRadius: "12px",
+									padding: "5px 10px",
+									cursor: "pointer",
+								}}
+							>
+								<input
+									type="checkbox"
+									value={tag.id}
+									checked={isSelected}
+									onChange={(e) => {
+										const current = formData.tags.split(",").filter((t) => t);
+										const updated = e.target.checked
+											? [...current, tag.id.toString()]
+											: current.filter((t) => t !== tag.id.toString());
+										setFormData((prev) => ({ ...prev, tags: updated.join(",") }));
+									}}
+									style={{ display: "none" }}
+								/>
+								{tag.name}
+							</label>
+						);
+					})}
+				</div>
+				{console.log("Tag IDs:", formData.tags)}
+
+				<br /><br />
+				<button type="submit" disabled={loading}>
+					{loading ? "Submitting..." : "Submit"}
+				</button>
+			</form>
+			{message && <p>{message}</p>}
+		</div>
+	);
 }
 
 export function CreateImage() {
