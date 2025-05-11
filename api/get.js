@@ -1,5 +1,5 @@
 export async function getBlogCount(env, queryParams) {
-	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs?select=id,archived&archived=neq.true`, {
+	const resp = await fetch(`${env.VITE_SUPABASE_URL}/rest/v1/blogs?select=id`, {
 		method: "HEAD",
 		headers: {
 			"apikey": env.VITE_SUPABASE_ANON_KEY,

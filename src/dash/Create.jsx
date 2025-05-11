@@ -109,7 +109,6 @@ export function CreateBlog() {
 						);
 					})}
 				</div>
-				{console.log("Tag IDs:", formData.tags)}
 
 				<br /><br />
 				<button type="submit" disabled={loading}>
@@ -145,8 +144,8 @@ export function CreateTag() {
 				headers: { "Authorization": encodeURIComponent(password) },
 			});
 			const data = await response.json();
-			if (response.ok) setMessage("Blog created successfully!");
-			else setMessage(`Error: ${data.message}`);
+			if (data.stat == "ok") setMessage("Blog created successfully!");
+			else setMessage(`Error: ${data}`);
 		} catch (error) {
 			setMessage(`Error: ${error.message}`);
 		} finally {
@@ -202,7 +201,6 @@ export function CreateTag() {
 						);
 					})}
 				</div>
-				{console.log("Tag IDs:", formData.tags)}
 
 				<br /><br />
 				<button type="submit" disabled={loading}>
